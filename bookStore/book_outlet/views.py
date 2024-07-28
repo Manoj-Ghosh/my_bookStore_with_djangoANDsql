@@ -1,5 +1,7 @@
 from django.shortcuts import render
 
+from django.http import Http404
+
 # Create your views here.
 
 from .models import Book
@@ -9,7 +11,14 @@ def index(request):
     return render(request, "book_outlet/index.html", { "books" : books})
 
 def book_detail(request, id):
-    book = Book.objects.get(pk = id)
+
+    try:
+
+        book = Book.objects.get(pk = id)
+
+    except:
+        raise Http404()
+    
     return render(request, "book_outlet/book_detail.html", {
         "title": book.title,
         "author": book.author,
