@@ -10,7 +10,8 @@ from django.shortcuts import get_object_or_404, render
 from .models import Book
 
 def index(request):
-    books = Book.objects.all()
+    books = Book.objects.all().order_by("title") # by assending order of title
+    #books = Book.objects.all().order_by("-title") --> by assending order of title
     num_books = books.count()
     avg_rating = books.aggregate(Avg("rating")) # rating__avg
 
